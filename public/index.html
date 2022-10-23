@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You got jebaited!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wallpaper"></div>
+  <div class="login-wrapper">
+    <img class="avatar" src="images/default_avatar.png" alt="default_avatar">
+
+    <div class="user-details">
+      <p class="full-name" id="full-name"></p>
+      <p class="username" id="user-name"></p>
+    </div>
+
+    <form action="audio/jebaited.mp3" id="password-form">
+      <div class="password-input">
+        <input type="password" placeholder="Password">
+        <button type="submit">→</button>
+      </div>
+    </form>
+
+    <div class="bottom-nav">
+      <button id="button-fullscreen">Click to fullscreen</button>
+    </div>
+
+  </div>
+
+  <script>
+    const e = {
+      document: document.documentElement,
+      fullName: document.getElementById('full-name'),
+      fullscreenButton: document.getElementById('button-fullscreen'),
+      passwordForm: document.getElementById('password-form'),
+      username: document.getElementById('user-name')
+    }
+
+    const openFullscreen = () => {
+      if (e.document.requestFullscreen) {
+        e.document.requestFullscreen();
+      } else if (e.document.webkitRequestFullscreen) { /* Safari */
+        e.document.webkitRequestFullscreen();
+      } else if (e.document.msRequestFullscreen) { /* IE11 */
+        e.document.msRequestFullscreen();
+      }
+    }
+
+    const query = new URLSearchParams(location.search);
+    const ou = query.get('o');
+
+    e.fullName.innerText = query.get('f') + (ou === null ? '' : ', ' + ou);
+    e.username.innerText = `${query.get('d')}/${query.get('u')}`;
+
+    const sound = new Audio('audio/jebaited.mp3');
+    sound.loop = true;
+    e.passwordForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      sound.volume = 1;
+      sound.play();
+    })
+
+    e.fullscreenButton.addEventListener('click', openFullscreen);
+  </script>
+</body>
+
+</html>
